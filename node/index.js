@@ -28,7 +28,7 @@ app.get('*', (req, res) => {
 });
 
 //react로 부터 받은 요청처리
-app.post('/api/send', (req, res) => {
+app.post('/api/create', (req, res) => {
 	console.log(req.body);
-	res.json({ success: true, resualt: req.body.name + '2' });
+	// res.json({ success: true, resualt: req.body.name + '2' });
 });
