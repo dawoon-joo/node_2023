@@ -4,6 +4,8 @@ const mongoose = require('mongoose');
 const app = express();
 const port = 5000;
 
+const { Post } = require('./model/postSchema');
+
 //express에서 react의 build폴더까지의 경로를 static으로 지정
 app.use(express.static(path.join(__dirname, '../react/build')));
 
@@ -30,5 +32,17 @@ app.get('*', (req, res) => {
 //react로 부터 받은 요청처리
 app.post('/api/create', (req, res) => {
 	console.log(req.body);
-	// res.json({ success: true, resualt: req.body.name + '2' });
+
+	const PostModel = new Post({
+		title: req.body.title,
+		content: req.body.content,
+	});
+
+	PostModel.save()
+		.then(() => {
+			res.json({ success: true });
+		})
+		.catch((err) => {
+			console.log(err);
+		});
 });
