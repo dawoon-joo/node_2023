@@ -49,4 +49,20 @@ router.post('/detail', (req, res) => {
 		});
 });
 
+//edit 요청처리
+router.post('/edit', (req, res) => {
+	const temp = {
+		title: req.body.title,
+		content: req.body.content,
+	};
+	Post.updateOne({ communityNum: req.body.num }, { $set: temp })
+		.exec()
+		.then(() => {
+			res.json({ success: true });
+		})
+		.catch((err) => {
+			res.json({ success: false });
+		});
+});
+
 module.exports = router;

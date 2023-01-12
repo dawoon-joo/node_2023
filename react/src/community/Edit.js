@@ -1,17 +1,46 @@
 import Layout from '../common/Layout';
-import { useEffect, useState, useMemo } from 'react';
-import { useParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import styled from 'styled-components';
+
+const Btnset = styled.div`
+	display: flex;
+	gap: 20px;
+	margin-top: 20px;
+`;
 
 function Edit() {
+	const navigate = useNavigate();
 	const parmas = useParams();
 	const [Detail, setDetail] = useState({});
 	const [Title, setTitle] = useState('');
 	const [Content, setContent] = useState('');
 
-	const item = useMemo(() => ({ num: parmas.num }), [parmas]);
+	const handleUpdata = () => {
+		if (Title.trim() === '' || Content.trimEnd() === '') return alert('모든 항목을 입력하세요');
+
+		const item = {
+			title: Title,
+			content: Content,
+			num: parmas.num,
+		};
+
+		axios
+			.post('/api/community/edit', item)
+			.then((res) => {
+				if (res.data.success) {
+					alert('글 수정이 완료되었습니다.');
+					navigate(`/detail/${parmas.num}`);
+				} else {
+					alert('글 수정에 실패했습니다.');
+				}
+			})
+			.catch((err) => console.log(err));
+	};
 
 	useEffect(() => {
+		const item = { num: parmas.num };
 		//기존의 detail node router를 재활용하여 params로 넘어온 글 번호로 다시 해당 document 호출
 		axios.post('/api/community/detail', item).then((res) => {
 			if (res.data.success) {
@@ -19,13 +48,14 @@ function Edit() {
 				setDetail(res.data.detail);
 			}
 		});
-	}, [item]);
+	}, [parmas]);
 
 	//Detail state값이 변경되면 다시 해당 정보로 부터 title, content값을 각각 state로 옮겨넣음
 	useEffect(() => {
 		setTitle(Detail.title);
 		setContent(Detail.content);
 	}, [Detail]);
+
 	return (
 		<Layout name={'Edit'}>
 			<label htmlFor='title'>Title</label>
@@ -35,6 +65,11 @@ function Edit() {
 			<label htmlFor='content'>Content</label>
 			{/* 컨텐츠 폼에 content 초기값으로 넣어주고 이후 onChange이벤트가 발생하면 실시간으로 state값 변경 */}
 			<textarea name='content' id='content' cols='30' rows='4' value={Content || ''} onChange={(e) => setContent(e.target.value)}></textarea>
+
+			<Btnset>
+				<button onClick={() => navigate('-1')}>cancel</button>
+				<button onClick={handleUpdata}>update</button>
+			</Btnset>
 		</Layout>
 	);
 }
