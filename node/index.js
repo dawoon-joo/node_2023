@@ -73,3 +73,16 @@ app.post('/api/read', (req, res) => {
 			res.json({ success: false });
 		});
 });
+
+//detail 요청처리
+app.post('/api/detail', (req, res) => {
+	//body-parser로 넘어온 글 고유번호로 해당 document 하나를 찾아서 다시 프론트쪽에 전달
+	Post.findOne({ communityNum: req.body.num })
+		.exec()
+		.then((doc) => {
+			res.json({ success: true, detail: doc });
+		})
+		.catch((err) => {
+			res.json({ success: false, err: err });
+		});
+});
