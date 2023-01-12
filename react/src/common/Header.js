@@ -5,7 +5,7 @@ const HeaderWrap = styled.header`
 	width: 350px;
 	height: 100vh;
 	background: #222;
-	position: fiexd;
+	position: fixed;
 	top: 0;
 	left: 0;
 	padding: 50px;
