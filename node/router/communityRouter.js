@@ -65,4 +65,16 @@ router.post('/edit', (req, res) => {
 		});
 });
 
+//delete 요청처리
+router.post('/delete', (req, res) => {
+	Post.deleteOne({ communityNum: req.body.num })
+		.exec()
+		.then(() => {
+			res.json({ success: true });
+		})
+		.catch((err) => {
+			res.json({ success: false, err: err });
+		});
+});
+
 module.exports = router;
