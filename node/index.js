@@ -29,7 +29,7 @@ app.get('*', (req, res) => {
 	res.sendFile(path.join(___dirname, '../react/build/index.html'));
 });
 
-//react로 부터 받은 요청처리
+//react로 부터 받은 create 요청처리
 app.post('/api/create', (req, res) => {
 	console.log(req.body);
 
@@ -44,5 +44,18 @@ app.post('/api/create', (req, res) => {
 		})
 		.catch((err) => {
 			console.log(err);
+		});
+});
+
+//react로 부터 받은 read 요청처리
+app.post('/api/read', (req, res) => {
+	Post.find()
+		.exec()
+		.then((doc) => {
+			res.json({ success: true, communityList: doc });
+		})
+		.catch((err) => {
+			console.log(err);
+			res.json({ success: false });
 		});
 });
