@@ -37,6 +37,9 @@ const MainWrap = styled.main`
 				color: #fff;
 				cursor: pointer;
 				border: none;
+				a {
+					color: #fff;
+				}
 			}
 		}
 	}
