@@ -12,7 +12,7 @@ const Btnset = styled.div`
 
 function Edit() {
 	const navigate = useNavigate();
-	const parmas = useParams();
+	const params = useParams();
 	const [Detail, setDetail] = useState({});
 	const [Title, setTitle] = useState('');
 	const [Content, setContent] = useState('');
@@ -23,7 +23,7 @@ function Edit() {
 		const item = {
 			title: Title,
 			content: Content,
-			num: parmas.num,
+			num: params.num,
 		};
 
 		axios
@@ -31,7 +31,7 @@ function Edit() {
 			.then((res) => {
 				if (res.data.success) {
 					alert('글 수정이 완료되었습니다.');
-					navigate(`/detail/${parmas.num}`);
+					navigate(`/detail/${params.num}`);
 				} else {
 					alert('글 수정에 실패했습니다.');
 				}
@@ -40,7 +40,7 @@ function Edit() {
 	};
 
 	useEffect(() => {
-		const item = { num: parmas.num };
+		const item = { num: params.num };
 		//기존의 detail node router를 재활용하여 params로 넘어온 글 번호로 다시 해당 document 호출
 		axios.post('/api/community/detail', item).then((res) => {
 			if (res.data.success) {
@@ -48,7 +48,7 @@ function Edit() {
 				setDetail(res.data.detail);
 			}
 		});
-	}, [parmas]);
+	}, [params]);
 
 	//Detail state값이 변경되면 다시 해당 정보로 부터 title, content값을 각각 state로 옮겨넣음
 	useEffect(() => {
@@ -67,7 +67,7 @@ function Edit() {
 			<textarea name='content' id='content' cols='30' rows='4' value={Content || ''} onChange={(e) => setContent(e.target.value)}></textarea>
 
 			<Btnset>
-				<button onClick={() => navigate('-1')}>cancel</button>
+				<button onClick={() => navigate(-1)}>cancel</button>
 				<button onClick={handleUpdata}>update</button>
 			</Btnset>
 		</Layout>

@@ -1,8 +1,7 @@
 import Layout from '../common/Layout';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import { useEffect, useState, useMemo } from 'react';
-import { Link } from 'react-router-dom';
 
 import styled from 'styled-components';
 
