@@ -12,7 +12,7 @@ function Create() {
 		const item = { title: Tit, content: Con };
 
 		axios
-			.post('/api/create', item)
+			.post('/api/community/create', item)
 			.then((res) => {
 				console.log(res);
 				if (res.data.success) {
