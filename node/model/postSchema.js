@@ -9,7 +9,12 @@ const postSchema = new mongoose.Schema(
 		title: String,
 		content: String,
 		communityNum: Number,
-		userNum: Number,
+		//User 컬렉션에서 참고하고자 하는 document의 object_id가 등록되면
+		//해당 다큐먼트의 정보 모두를 psot에서 불러올수 있도록 하기위한 설정
+		writer: {
+			ref: 'User',
+			type: mongoose.Schema.Types.ObjectId,
+		},
 	},
 	{ collection: 'Posts' }
 );

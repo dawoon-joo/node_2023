@@ -2,14 +2,16 @@ import axios from 'axios';
 import { useState } from 'react';
 import Layout from '../common/Layout';
 import { useNavigate } from 'react-router-dom';
-
+import { useSelector } from 'react-redux';
 function Create() {
 	const navigate = useNavigate();
+	const user = useSelector((store) => store.user);
 	const [Tit, setTit] = useState('');
 	const [Con, setCon] = useState('');
 
 	const handleCreate = () => {
-		const item = { title: Tit, content: Con };
+		if (Tit.trim() === '' || Con.trim() === '') return alert('제목과 본문을 모두 입력하세요');
+		const item = { title: Tit, content: Con, uid: user.uid };
 
 		axios
 			.post('/api/community/create', item)
