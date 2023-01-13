@@ -1,6 +1,7 @@
 import { NavLink } from 'react-router-dom';
 import styled from 'styled-components';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { logoutUser } from '../redux/userSlice';
 import firebase from '../firebase';
 import { useNavigate } from 'react-router-dom';
 
@@ -66,6 +67,7 @@ const Util2 = styled.ul`
 `;
 
 function Header() {
+	const dispatch = useDispatch();
 	const navigate = useNavigate();
 	const activeStyle = { color: 'hotpink' };
 
@@ -113,6 +115,7 @@ function Header() {
 					<span
 						onClick={() => {
 							firebase.auth().signOut();
+							dispatch(logoutUser());
 							alert('로그아웃 되었습니다. 메인페이지로 이동합니다.');
 							navigate('/');
 						}}
