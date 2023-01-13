@@ -2,6 +2,8 @@ import Layout from '../common/Layout';
 import styled from 'styled-components';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { loginUser } from '../redux/userSlice';
+import { useDispatch } from 'react-redux';
 import firebase from '../firebase';
 import axios from 'axios';
 
@@ -11,6 +13,7 @@ const BtnSet = styled.div`
 
 function Join() {
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
 	const [Email, setEmail] = useState('');
 	const [Pwd1, setPwd1] = useState('');
 	const [Pwd2, setPwd2] = useState('');
@@ -36,8 +39,10 @@ function Join() {
 		};
 
 		axios.post('/api/user/join', item).then((res) => {
-			if (res.data.success) navigate('/login');
-			else return alert('회원가입에 실패했습니다.');
+			if (res.data.success) {
+				dispatch(loginUser(createdUser.user));
+				navigate('/login');
+			} else return alert('회원가입에 실패했습니다.');
 		});
 	};
 
