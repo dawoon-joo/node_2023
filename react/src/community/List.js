@@ -2,7 +2,6 @@ import Layout from '../common/Layout';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-
 import styled from 'styled-components';
 
 const Item = styled.article`
@@ -15,9 +14,10 @@ const Item = styled.article`
 
 function List() {
 	const [List, setList] = useState([]);
+
 	useEffect(() => {
 		axios
-			.post('/api/community/read')
+			.get(`/api/community/read/0`)
 			.then((res) => {
 				if (res.data.success) {
 					setList(res.data.communityList);
@@ -25,6 +25,7 @@ function List() {
 			})
 			.catch((err) => console.log(err));
 	}, []);
+
 	return (
 		<Layout name={'List'}>
 			{List.map((post) => {
@@ -33,7 +34,7 @@ function List() {
 						<h2>
 							<Link to={`/detail/${post.communityNum}`}>{post.title}</Link>
 						</h2>
-						<span>작성자: {post.writer.displayName}</span>
+						<p>작성자: {post.writer.displayName}</p>
 						{post.createdAt === post.updatedAt ? <p>작성일: {post.createdAt.split('T')[0]}</p> : <p>수정일: {post.updatedAt.split('T')[0]}</p>}
 					</Item>
 				);

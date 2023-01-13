@@ -1,5 +1,5 @@
 import Layout from '../common/Layout';
-import { useParams, useNavigate, Link } from 'react-router-dom';
+import { useParams, Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useEffect, useState, useMemo } from 'react';
 import styled from 'styled-components';
@@ -13,9 +13,9 @@ const DetailWrap = styled.div`
 `;
 
 const BtnSet = styled.div`
-	margin-top: 20px;
 	display: flex;
 	gap: 20px;
+	margin-top: 20px;
 `;
 
 function Detail() {
@@ -23,15 +23,14 @@ function Detail() {
 	const navigate = useNavigate();
 	const [Detail, setDetail] = useState(null);
 	const params = useParams();
-	console.log(params);
 	const item = useMemo(() => ({ num: params.num }), [params]);
 
 	const handleDelete = () => {
 		const item = { num: params.num };
-		if (!window.confirm('정말 삭제하시겠습니까?')) return;
+		if (!window.confirm('정말 삭제하겠습니까?')) return;
 
 		axios
-			.post('/api/community/delete', item)
+			.delete(`/api/community/delete/${item.num}`)
 			.then((res) => {
 				if (res.data.success) {
 					alert('게시글이 삭제되었습니다.');
@@ -45,7 +44,7 @@ function Detail() {
 
 	useEffect(() => {
 		axios
-			.post('/api/community/detail', item)
+			.get(`/api/community/detail/${item.num}`)
 			.then((res) => {
 				if (res.data.success) {
 					setDetail(res.data.detail);
@@ -61,7 +60,6 @@ function Detail() {
 					<DetailWrap>
 						<h2>{Detail?.title}</h2>
 						<p>{Detail?.content}</p>
-						<span>작성자:{Detail?.writer.displayName}</span>
 						<span>작성자: {Detail?.writer.displayName}</span>
 						{Detail?.createdAt === Detail?.updatedAt ? (
 							<p>작성일: {Detail?.createdAt.split('T')[0]}</p>
