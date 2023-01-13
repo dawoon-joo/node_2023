@@ -2,7 +2,7 @@ import Layout from '../common/Layout';
 import styled from 'styled-components';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { loginUser } from '../redux/userSlice';
+import { logoutUser } from '../redux/userSlice';
 import { useDispatch } from 'react-redux';
 import firebase from '../firebase';
 import axios from 'axios';
@@ -38,9 +38,11 @@ function Join() {
 			uid: createdUser.user.multiFactor.user.uid,
 		};
 
+		firebase.auth().signOut();
+		dispatch(logoutUser());
+
 		axios.post('/api/user/join', item).then((res) => {
 			if (res.data.success) {
-				dispatch(loginUser(createdUser.user));
 				navigate('/login');
 			} else return alert('회원가입에 실패했습니다.');
 		});
