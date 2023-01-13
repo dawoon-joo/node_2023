@@ -62,6 +62,12 @@ function Detail() {
 						<h2>{Detail?.title}</h2>
 						<p>{Detail?.content}</p>
 						<span>작성자:{Detail?.writer.displayName}</span>
+						<span>작성자: {Detail?.writer.displayName}</span>
+						{Detail?.createdAt === Detail?.updatedAt ? (
+							<p>작성일: {Detail?.createdAt.split('T')[0]}</p>
+						) : (
+							<p>수정일: {Detail?.updatedAt.split('T')[0]}</p>
+						)}
 					</DetailWrap>
 
 					{user.uid === Detail?.writer.uid && (

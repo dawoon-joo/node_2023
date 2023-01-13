@@ -34,6 +34,7 @@ function List() {
 							<Link to={`/detail/${post.communityNum}`}>{post.title}</Link>
 						</h2>
 						<span>작성자: {post.writer.displayName}</span>
+						{post.createdAt === post.updatedAt ? <p>작성일: {post.createdAt.split('T')[0]}</p> : <p>수정일: {post.updatedAt.split('T')[0]}</p>}
 					</Item>
 				);
 			})}
