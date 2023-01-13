@@ -29,7 +29,7 @@ function App() {
 	}, [dispatch]);
 
 	useEffect(() => {
-		firebase.auth().signOut();
+		// firebase.auth().signOut();
 	}, []);
 
 	return (

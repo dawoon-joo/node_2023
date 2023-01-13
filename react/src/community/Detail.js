@@ -64,7 +64,7 @@ function Detail() {
 						<span>작성자:{Detail?.writer.displayName}</span>
 					</DetailWrap>
 
-					{user.accessToken !== '' && (
+					{user.uid === Detail?.writer.uid && (
 						<BtnSet>
 							<button>
 								<Link to={`/edit/${Detail?.communityNum}`}>Edit</Link>
