@@ -61,6 +61,7 @@ function Detail() {
 					<DetailWrap>
 						<h2>{Detail?.title}</h2>
 						<p>{Detail?.content}</p>
+						<span>작성자:{Detail?.writer.displayName}</span>
 					</DetailWrap>
 
 					{user.accessToken !== '' && (
