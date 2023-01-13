@@ -6,6 +6,8 @@ import Detail from './community/Detail';
 import Edit from './community/Edit';
 import List from './community/List';
 import GlobalStyle from './GlobalStyle';
+import Join from './user/Join';
+import Login from './user/Login';
 
 function App() {
 	return (
@@ -20,6 +22,9 @@ function App() {
 				{/* /detail url로 접속뒤 뒤에 나오는 정보값을 num라는 키값에 담아 param객체 전달 */}
 				<Route path='/detail/:num' element={<Detail />} />
 				<Route path='/edit/:num' element={<Edit />} />
+
+				<Route path='/join' element={<Join />} />
+				<Route path='/login' element={<Login />} />
 			</Routes>
 		</>
 	);
