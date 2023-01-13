@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import firebase from '../firebase';
+import axios from 'axios';
 
 const BtnSet = styled.div`
 	margin-top: 20px;
@@ -27,6 +28,17 @@ function Join() {
 		await createdUser.user.updateProfile({ displayName: Name });
 		console.log(createdUser.user);
 		navigate('/login');
+
+		const item = {
+			email: createdUser.user.multiFactor.user.email,
+			displayName: createdUser.user.multiFactor.user.displayName,
+			uid: createdUser.user.multiFactor.user.uid,
+		};
+
+		axios.post('/api/user/join', item).then((res) => {
+			if (res.data.success) navigate('/login');
+			else return alert('회원가입에 실패했습니다.');
+		});
 	};
 
 	return (
