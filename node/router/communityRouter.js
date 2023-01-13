@@ -36,6 +36,8 @@ router.post('/create', (req, res) => {
 router.post('/read', (req, res) => {
 	Post.find()
 		.populate('writer')
+		// createdAt : 1 (원래순서) / createdAt: -1 (역순)
+		.sort({ createdAt: -1 })
 		.exec()
 		.then((doc) => {
 			res.json({ success: true, communityList: doc });
